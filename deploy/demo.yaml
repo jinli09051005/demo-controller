@@ -31,7 +31,7 @@ spec:
             - mountPath: /tmp
               name: demo
             - mountPath: /etc/localtime
-              name: localtime0
+              name: localtime
       volumes:
         - configMap:
             name: demo
