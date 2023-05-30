@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller
+  labels:
+    app: controller
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: controller
+  strategy:
+    rollingUpdate:
+      maxSurge: 30%
+      maxUnavailable: 30%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: controller
+    spec:
+      serviceAccountName: controller
+      containers:
+        - name: demo
+          image: controller:v1
+          imagePullPolicy: IfNotPresent
+          command: ["/root/main"]
+          volumeMounts:
+            - mountPath: /etc/localtime
+              name: localtime
+      volumes:
+        - hostPath:
+            path: /etc/localtime
+          name: localtime
+
+
