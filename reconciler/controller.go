@@ -20,7 +20,6 @@ func Start() {
 	//_ = appsv1.AddToScheme(scheme)
 	selectorLabel := make(map[string]string)
 	selectorLabel["app"] = "demo"
-
 	config := ctrl.GetConfigOrDie()
 	mgr, err := ctrl.NewManager(config,
 		ctrl.Options{
@@ -61,7 +60,6 @@ func Start() {
 				return false
 			},
 			UpdateFunc: func(updateEvent event.UpdateEvent) bool {
-				//updateEvent.ObjectOld.GetLabels()
 				return true
 			},
 			GenericFunc: func(genericEvent event.GenericEvent) bool {
