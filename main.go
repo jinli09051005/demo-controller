@@ -1,11 +1,9 @@
 package main
 
-import (
-	"demo/reconciler"
-	"fmt"
-)
+import "demo/debug"
 
 func main() {
-	fmt.Println("开始工作...")
-	reconciler.Start()
+	//fmt.Println("开始工作...")
+	//reconciler.Start()
+	debug.CreateJointYml()
 }
