@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"gopkg.in/yaml.v3"
+	goyml "gopkg.in/yaml.v3"
 	"io"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
-	ymlCodec "k8s.io/apimachinery/pkg/runtime/serializer/yaml"
+	ymlcodec "k8s.io/apimachinery/pkg/runtime/serializer/yaml"
 	"k8s.io/client-go/discovery"
 	discache "k8s.io/client-go/discovery/cached"
 	"k8s.io/client-go/dynamic"
@@ -25,7 +25,7 @@ func GetJointYaml() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	dec := yaml.NewDecoder(file)
+	dec := goyml.NewDecoder(file)
 	y := make(map[string]interface{})
 
 	err = dec.Decode(&y)
@@ -87,7 +87,7 @@ func dynamicCreate(ctx context.Context, cfg *rest.Config, codec runtime.Serializ
 func CreateJointYml() {
 	ctx := context.TODO()
 	// 初始化编解码器
-	codec := ymlCodec.NewDecodingSerializer(unstructured.UnstructuredJSONScheme)
+	codec := ymlcodec.NewDecodingSerializer(unstructured.UnstructuredJSONScheme)
 	// 从容器中获取集群配置
 	restConfig, err := rest.InClusterConfig()
 	if err != nil {
@@ -98,7 +98,7 @@ func CreateJointYml() {
 	if err != nil {
 		panic(err)
 	}
-	dec := yaml.NewDecoder(file)
+	dec := goyml.NewDecoder(file)
 	ymls := make(map[string]interface{})
 	err = dec.Decode(&ymls)
 	for err == nil {
